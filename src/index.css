@@ -1,0 +1,215 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 2%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 4%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 155 100% 50%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 64%;
+    --accent: 185 100% 50%;
+    --accent-foreground: 0 0% 0%;
+    --destructive: 4 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 155 100% 50%;
+    --radius: 0.25rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: #050505;
+    min-height: 100vh;
+  }
+
+  /* Noise texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    z-index: 9999;
+  }
+  
+  /* Headings - JetBrains Mono */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: -0.02em;
+    font-weight: 500;
+  }
+  
+  /* Code and data - JetBrains Mono */
+  code, pre, .mono, [data-mono] {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+@layer components {
+  /* Neon glow effect */
+  .glow-primary {
+    box-shadow: 0 0 10px rgba(0, 255, 148, 0.3), 0 0 20px rgba(0, 255, 148, 0.1);
+  }
+  
+  .glow-accent {
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.3), 0 0 20px rgba(0, 240, 255, 0.1);
+  }
+  
+  /* Scanlines effect */
+  .scanlines {
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.1) 2px,
+      rgba(0, 0, 0, 0.1) 4px
+    );
+  }
+  
+  /* Pulse animation */
+  .pulse-glow {
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+  
+  @keyframes pulseGlow {
+    0%, 100% {
+      box-shadow: 0 0 5px rgba(0, 255, 148, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 15px rgba(0, 255, 148, 0.5), 0 0 30px rgba(0, 255, 148, 0.2);
+    }
+  }
+  
+  /* Glitch effect on hover */
+  .glitch-hover:hover {
+    animation: glitch 0.3s ease-in-out;
+  }
+  
+  @keyframes glitch {
+    0%, 100% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+  }
+  
+  /* Terminal input style */
+  .terminal-input {
+    @apply bg-[#121212] border-b-2 border-primary/50 focus:border-primary outline-none transition-colors;
+  }
+  
+  /* Grid borders */
+  .grid-border {
+    @apply border border-border;
+  }
+  
+  /* Bento card */
+  .bento-card {
+    @apply bg-card border border-border p-4 transition-all duration-200;
+  }
+  
+  .bento-card:hover {
+    @apply border-primary/30;
+  }
+  
+  /* Status indicators */
+  .status-active {
+    @apply bg-primary text-primary-foreground;
+  }
+  
+  .status-pending {
+    @apply bg-yellow-500 text-black;
+  }
+  
+  .status-inactive {
+    @apply bg-muted text-muted-foreground;
+  }
+  
+  /* Hash display */
+  .hash-display {
+    @apply font-mono text-xs text-muted-foreground truncate;
+  }
+  
+  /* Keyboard shortcut badge */
+  .kbd {
+    @apply inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-mono bg-muted border border-border rounded;
+  }
+}
+
+@layer utilities {
+  /* Text gradient */
+  .text-gradient-primary {
+    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+  }
+  
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Custom scrollbar */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #27272A #050505;
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: #050505;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: #27272A;
+    border-radius: 3px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: #3f3f46;
+  }
+}
+
+/* Focus styles for keyboard navigation */
+*:focus-visible {
+  @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
+}
+
+/* Selection color */
+::selection {
+  @apply bg-primary/30 text-foreground;
+}
+
+/* Debug wrapper */
+[data-debug-wrapper="true"] {
+  display: contents !important;
+}
